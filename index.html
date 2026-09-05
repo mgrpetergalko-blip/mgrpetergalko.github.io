@@ -4,112 +4,214 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Náš spoločný čas ♡ — Mgr. Peter Galko</title>
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
   <style>
-    :root{
-      --pink:#ff6f9f; --pink2:#ffb6cc; --cream:#fff8fb; --ink:#49343d;
+    :root {
+      --pink: #ff6f9f;
+      --pink2: #ffb6cc;
+      --cream: #fff8fb;
+      --ink: #49343d;
     }
-    body{
-      min-height:100vh; margin:0; color:var(--ink);
-      font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
-      background:
-        radial-gradient(circle at 15% 10%, rgba(255,182,204,.35), transparent 28%),
-        radial-gradient(circle at 90% 20%, rgba(255,111,159,.18), transparent 30%),
-        linear-gradient(135deg,#fff9fc,#fff0f5 55%,#fff8fb);
-      overflow-x:hidden;
+
+    * {
+      box-sizing: border-box;
     }
-    .app{max-width:1100px; position:relative;}
-    .clock-badge {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 999;
-      background: rgba(255, 255, 255, .72);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, #fff9fc, #fff0f5 55%, #fff8fb);
+      overflow-x: hidden;
+    }
+
+    .app {
+      max-width: 1100px;
+      position: relative;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, .85);
       border: 1px solid rgba(255, 255, 255, .9);
-      box-shadow: 0 12px 32px rgba(180, 70, 105, .12);
-      border-radius: 40px;
-      padding: 10px 18px 10px 20px;
+      box-shadow: 0 18px 50px rgba(180, 70, 105, .12);
+      border-radius: 28px;
+    }
+
+    .hero {
+      padding: 34px;
+      position: relative;
+    }
+
+    .live-time {
+      position: absolute;
+      top: 22px;
+      right: 28px;
+      background: rgba(255, 255, 255, .75);
+      border: 1px solid rgba(255, 111, 159, .18);
+      border-radius: 18px;
+      padding: 8px 13px;
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--pink);
+      box-shadow: 0 5px 18px rgba(180, 70, 105, .08);
+    }
+
+    .heart-wrapper {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 10px 0 15px;
+      position: relative;
+    }
+
+    /* SRDIEČKO POMOCOU SVG */
+    .heart-svg {
+      width: 110px;
+      height: 110px;
+      display: block;
+      filter: drop-shadow(0 8px 15px rgba(255, 111, 159, .3));
+    }
+
+    .heart-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-2deg);
+      color: white;
+      font-size: 14px;
+      font-weight: 800;
+      text-align: center;
+      line-height: 1.2;
+      pointer-events: none;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      width: 80px;
+    }
+
+    .heart-text small {
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .title {
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .subtitle {
+      opacity: .7;
+    }
+
+    .stat {
+      border-radius: 22px;
+      background: rgba(255, 255, 255, .9);
+      padding: 20px 10px;
+      box-shadow: 0 8px 25px rgba(180, 70, 105, .08);
+      height: 100%;
+    }
+
+    .stat .num {
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--pink);
+    }
+
+    .stat .label {
+      font-size: .9rem;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      opacity: .65;
+    }
+
+    .calendar {
+      padding: 25px;
+    }
+
+    .calendar-head {
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-weight: 600;
-      transition: all 0.2s;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
     }
-    .clock-badge:hover {
-      background: rgba(255,255,255,.86);
-      box-shadow: 0 16px 40px rgba(180,70,105,.18);
-    }
-    .clock-badge .heart-icon {
-      font-size: 22px;
-      line-height: 1;
-      animation: pulse 2s infinite;
-    }
-    .clock-badge .time-display {
-      font-size: 1.2rem;
-      letter-spacing: 0.5px;
-      color: var(--ink);
-      background: rgba(255,111,159,.10);
-      padding: 0 14px 0 10px;
-      border-radius: 40px;
-      line-height: 2;
-    }
-    @media (max-width: 576px) {
-      .clock-badge {
-        top: 12px;
-        right: 12px;
-        padding: 6px 12px 6px 14px;
-        border-radius: 30px;
-      }
-      .clock-badge .time-display {
-        font-size: 0.9rem;
-        padding: 0 10px 0 8px;
-      }
-      .clock-badge .heart-icon {
-        font-size: 18px;
-      }
-    }
-    .glass{
-      background:rgba(255,255,255,.72); backdrop-filter:blur(18px);
-      -webkit-backdrop-filter:blur(18px);
-      border:1px solid rgba(255,255,255,.9); box-shadow:0 18px 50px rgba(180,70,105,.12);
-      border-radius:28px;
-    }
-    .hero{padding:34px}
-    .heart{font-size:52px; animation:pulse 1.8s infinite; display:inline-block}
-    @keyframes pulse{50%{transform:scale(1.12)}}
-    .title{font-weight:800; letter-spacing:-1px}
-    .subtitle{opacity:.7}
-    .stat{
-      border-radius:22px; background:rgba(255,255,255,.8); padding:20px 10px;
-      box-shadow:0 8px 25px rgba(180,70,105,.08); height:100%;
-    }
-    .stat .num{font-size:clamp(30px,5vw,48px);font-weight:800;color:var(--pink)}
-    .stat .label{font-size:.9rem;text-transform:uppercase;letter-spacing:1.2px;opacity:.65}
-    .calendar{padding:25px}
-    .calendar-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
-    .month-title{font-weight:800;font-size:1.5rem}
-    .weekday,.day{display:flex;align-items:center;justify-content:center}
-    .weekday{height:35px;font-size:.78rem;font-weight:700;opacity:.55}
-    .day{
-      min-height:72px; position:relative; border-radius:17px; cursor:pointer;
-      transition:.18s ease; background:rgba(255,255,255,.45); border:1px solid transparent;
-      flex-direction:column; gap:3px;
-    }
-    .day:hover{transform:translateY(-2px);background:white;box-shadow:0 8px 20px rgba(180,70,105,.1)}
-    .day.muted{opacity:.25}
-    .day.today{border-color:var(--pink);box-shadow:inset 0 0 0 2px rgba(255,111,159,.12)}
-    .day.anniv{background:linear-gradient(135deg,#fff,#ffe2ec);border-color:var(--pink2)}
-    .day .heart-mini{font-size:14px;line-height:1}
-    .day .date-num{font-weight:700}
-    .legend{font-size:.82rem;opacity:.65}
-    .settings{padding:24px}
-    .btn-love{background:var(--pink);border:0;color:#fff;border-radius:14px;padding:10px 16px;font-weight:700}
-    .btn-love:hover{background:#f85c90;color:white}
-    input.form-control{border-radius:14px}
 
-    /* ——— NOVÉ ŠTÝLY PRE PLÁVAJÚCE SRDIEČKA ——— */
+    .month-title {
+      font-weight: 800;
+      font-size: 1.5rem;
+      text-align: center;
+      text-transform: capitalize;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+      width: 100%;
+    }
+
+    .weekday {
+      height: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .78rem;
+      font-weight: 700;
+      opacity: .55;
+    }
+
+    .day {
+      width: 100%;
+      min-height: 60px;
+      border-radius: 14px;
+      cursor: pointer;
+      background: rgba(255, 255, 255, .6);
+      border: 1px solid transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .day.muted {
+      opacity: .25;
+    }
+
+    .day.today {
+      border-color: var(--pink);
+      font-weight: bold;
+    }
+
+    .day.anniv {
+      background: #ffe2ec;
+      border-color: var(--pink2);
+    }
+
+    .day .heart-mini {
+      font-size: 12px;
+    }
+
+    .day .date-num {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .legend {
+      font-size: .82rem;
+      opacity: .65;
+    }
+
+    .toast-love {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 1000;
+      display: none;
+    }
+
+    /* ——— ANIMOVANÉ PLÁVAJÚCE SRDIEČKA ——— */
     .floating-heart {
       position: fixed;
       bottom: -60px;
@@ -122,6 +224,7 @@
       transform-origin: center;
       will-change: transform, opacity;
     }
+
     @keyframes floatUp {
       0% {
         opacity: 0.9;
@@ -132,128 +235,233 @@
         transform: translateY(-110vh) scale(1.4) rotate(35deg);
       }
     }
-    /* ——— KONIEC NOVÝCH ŠTÝLOV ——— */
+    /* ——— KONIEC ANIMOVANÝCH SRDIEČOK ——— */
 
-    .toast-love{position:fixed;right:18px;bottom:18px;z-index:10}
-    @media(max-width:575px){
-      .hero{padding:25px 18px}.calendar{padding:14px}
-      .day{min-height:58px;border-radius:12px}.weekday{font-size:.65rem}
+    @media (max-width: 576px) {
+      .hero {
+        padding: 20px 14px;
+      }
+
+      .calendar {
+        padding: 14px;
+      }
+
+      .calendar-grid {
+        gap: 3px;
+      }
+
+      .day {
+        min-height: 50px;
+        border-radius: 10px;
+      }
+
+      .weekday {
+        font-size: .65rem;
+        height: 28px;
+      }
+
+      .stat .num {
+        font-size: 28px;
+      }
+
+      .live-time {
+        top: 12px;
+        right: 12px;
+        font-size: .75rem;
+        padding: 6px 9px;
+      }
+
+      .heart-svg {
+        width: 90px;
+        height: 90px;
+      }
+
+      .heart-text {
+        font-size: 12px;
+        width: 70px;
+      }
     }
   </style>
 </head>
+
 <body>
+
 <div class="container app py-4 py-md-5">
 
-  <div class="clock-badge">
-    <span class="heart-icon">♡</span>
-    <span class="time-display" id="currentTime">--:--:--</span>
-  </div>
-
   <section class="glass hero mb-4 text-center">
-    <div class="heart">♡</div>
-    <h1 class="title display-5 mt-2 mb-2">Náš spoločný čas</h1>
-    <p class="subtitle mb-4">Každý deň je ďalší malý kúsok nášho príbehu.</p>
-    <div class="row g-3">
-      <div class="col-4"><div class="stat"><div class="num" id="days">650</div><div class="label">dní</div></div></div>
-      <div class="col-4"><div class="stat"><div class="num" id="months">21</div><div class="label">mesiacov</div></div></div>
-      <div class="col-4"><div class="stat"><div class="num" id="years">1</div><div class="label">rok</div></div></div>
+
+    <div class="live-time">
+      🕐 <span id="liveTime">--:--:--</span>
     </div>
-    <p class="mt-4 mb-1 fw-semibold">Spolu od <span id="sinceText"></span> • dnes <span id="todayText"></span></p>
+
+    <!-- SRDIEČKO SVG -->
+    <div class="heart-wrapper">
+      <svg class="heart-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 88 C20 65 0 50 0 30 C0 12 15 0 30 0 C40 0 46 6 50 14 C54 6 60 0 70 0 C85 0 100 12 100 30 C100 50 80 65 50 88 Z" fill="#ff6f9f"/>
+      </svg>
+      <div class="heart-text">
+        24. 11.<br><small>2024</small>
+      </div>
+    </div>
+
+    <h1 class="title display-5 mt-2 mb-2">
+      Náš spoločný čas
+    </h1>
+
+    <p class="subtitle mb-4">
+      Každý deň je ďalší malý kúsok nášho príbehu.
+    </p>
+
+    <div class="row g-3">
+
+      <div class="col-4">
+        <div class="stat">
+          <div class="num" id="days">...</div>
+          <div class="label">dní</div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class="stat">
+          <div class="num" id="months">...</div>
+          <div class="label">mesiacov</div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class="stat">
+          <div class="num" id="years">...</div>
+          <div class="label">rokov</div>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="mt-4 mb-1 fw-semibold">
+      Spolu od <span id="sinceText">...</span>
+      • dnes <span id="todayText">...</span>
+    </p>
+
   </section>
 
   <section class="glass calendar mb-4">
+
     <div class="calendar-head">
-      <button class="btn btn-light rounded-4" id="prev">‹</button>
-      <div class="month-title" id="monthTitle"></div>
-      <button class="btn btn-light rounded-4" id="next">›</button>
+      <button class="btn btn-light rounded-4" id="prev" type="button">‹</button>
+
+      <div class="month-title" id="monthTitle">...</div>
+
+      <button class="btn btn-light rounded-4" id="next" type="button">›</button>
     </div>
-    <div class="row row-cols-7 g-1" id="calendarGrid"></div>
-    <div class="legend mt-3">♡ označuje váš výnimočný deň • krúžok označuje dnešok</div>
+
+    <div class="calendar-grid" id="calendarGrid"></div>
+
+    <div class="legend mt-3 text-center">
+      ♡ označuje váš výnimočný deň • obrys označuje dnešok
+    </div>
+
   </section>
 
-  <section class="glass settings text-center">
-    <h5 class="fw-bold mb-2">Náš začiatok 💗</h5>
-    <div class="fs-4 fw-bold" style="color:var(--pink)">24. 11. 2024</div>
-    <p class="small opacity-75 mb-0 mt-2"> </p>
+  <section class="glass p-4 text-center">
+
+    <h5 class="fw-bold mb-2">
+      Náš začiatok 💗
+    </h5>
+
+    <div class="fs-4 fw-bold" style="color:var(--pink)">
+      24. 11. 2024
+    </div>
+
   </section>
+
 </div>
 
-<div class="toast-love">
-  <div class="toast align-items-center border-0 shadow" id="loveToast" role="alert">
+<div class="toast-love" id="loveToast">
+
+  <div class="toast show align-items-center border-0 shadow">
+
     <div class="d-flex">
-      <div class="toast-body">♡ Každý deň spolu sa počíta.</div>
-      <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"></button>
+
+      <div class="toast-body" id="toastMsg"></div>
+
     </div>
+
   </div>
+
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-(function() {
-  'use strict';
-  
-  const skMonths = ["január","február","marec","apríl","máj","jún","júl","august","september","október","november","december"];
-  const skWeek = ["Po","Ut","St","Št","Pi","So","Ne"];
-  const pad = function(n) { return String(n).padStart(2,"0"); };
-  const fmt = function(d) { return pad(d.getDate()) + ". " + skMonths[d.getMonth()] + " " + d.getFullYear(); };
-  
-  const START_DATE = new Date(2024, 10, 24);
-  let start = new Date(START_DATE);
-  let view = new Date();
+<footer class="text-center small opacity-50 py-4">
+  Vytvoril: Mgr. Peter Galko
+</footer>
 
-  function diffCalendar(a,b){
-    let y = b.getFullYear() - a.getFullYear();
-    let m = b.getMonth() - a.getMonth();
-    let d = b.getDate() - a.getDate();
-    if(d < 0){ 
-      m--; 
-      d += new Date(b.getFullYear(), b.getMonth(), 0).getDate(); 
-    }
-    if(m < 0){ 
-      y--; 
-      m += 12; 
-    }
-    return {y: y, m: m, d: d};
+<script>
+  var skMonths = [
+    "január", "február", "marec", "apríl", "máj", "jún",
+    "júl", "august", "september", "október", "november", "december"
+  ];
+
+  var skWeek = ["Po", "Ut", "St", "Št", "Pi", "So", "Ne"];
+
+  var start = new Date(2024, 10, 24);
+  var view = new Date();
+
+  function pad(n) {
+    return (n < 10 ? '0' : '') + n;
   }
 
-  function updateStats(){
+  function fmt(d) {
+    return pad(d.getDate()) + ". " +
+           skMonths[d.getMonth()] + " " +
+           d.getFullYear();
+  }
+
+  function daysBetween(a, b) {
+    var oneDay = 1000 * 60 * 60 * 24;
+    return Math.round((b.getTime() - a.getTime()) / oneDay);
+  }
+
+  function updateClock() {
+    var now = new Date();
+    var time = pad(now.getHours()) + ":" + pad(now.getMinutes()) + ":" + pad(now.getSeconds());
+    var clock = document.getElementById("liveTime");
+    if (clock) {
+      clock.textContent = time;
+    }
+  }
+
+  function updateStats() {
     var today = new Date();
     var todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     var startMidnight = new Date(start.getFullYear(), start.getMonth(), start.getDate());
-    
-    var diffTime = Math.abs(todayMidnight.getTime() - startMidnight.getTime());
-    var days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
-    var diff = diffCalendar(startMidnight, todayMidnight);
-    
-    var daysEl = document.getElementById("days");
-    var monthsEl = document.getElementById("months");
-    var yearsEl = document.getElementById("years");
-    var sinceEl = document.getElementById("sinceText");
-    var todayEl = document.getElementById("todayText");
-    
-    if (daysEl) daysEl.textContent = days;
-    if (monthsEl) monthsEl.textContent = diff.y * 12 + diff.m;
-    if (yearsEl) yearsEl.textContent = diff.y;
-    if (sinceEl) sinceEl.textContent = fmt(startMidnight);
-    if (todayEl) todayEl.textContent = fmt(todayMidnight);
+    var days = daysBetween(startMidnight, todayMidnight);
+    var y = todayMidnight.getFullYear() - startMidnight.getFullYear();
+    var m = todayMidnight.getMonth() - startMidnight.getMonth();
+    if (m < 0) {
+      y--;
+      m += 12;
+    }
+    document.getElementById("days").textContent = days;
+    document.getElementById("months").textContent = (y * 12 + m);
+    document.getElementById("years").textContent = y;
+    document.getElementById("sinceText").textContent = fmt(startMidnight);
+    document.getElementById("todayText").textContent = fmt(todayMidnight);
   }
 
-  function renderCalendar(){
+  function renderCalendar() {
     var grid = document.getElementById("calendarGrid");
     if (!grid) return;
     grid.innerHTML = "";
-    
-    skWeek.forEach(function(w){
-      var el = document.createElement("div");
-      el.className = "col";
-      el.innerHTML = '<div class="weekday">' + w + '</div>';
-      grid.appendChild(el);
-    });
 
-    var monthTitle = document.getElementById("monthTitle");
-    if (monthTitle) {
-      monthTitle.textContent = skMonths[view.getMonth()] + " " + view.getFullYear();
+    for (var w = 0; w < skWeek.length; w++) {
+      var wEl = document.createElement("div");
+      wEl.className = "weekday";
+      wEl.textContent = skWeek[w];
+      grid.appendChild(wEl);
+    }
+
+    var elMonthTitle = document.getElementById("monthTitle");
+    if (elMonthTitle) {
+      elMonthTitle.textContent = skMonths[view.getMonth()] + " " + view.getFullYear();
     }
 
     var first = new Date(view.getFullYear(), view.getMonth(), 1);
@@ -261,149 +469,122 @@
     var daysInMonth = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
     var prevDays = new Date(view.getFullYear(), view.getMonth(), 0).getDate();
     var total = Math.ceil((offset + daysInMonth) / 7) * 7;
-    
+
     var today = new Date();
     var todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-    var annivMonth = start.getMonth();
-    var annivDay = start.getDate();
 
-    for(var i = 0; i < total; i++){
+    for (var i = 0; i < total; i++) {
       var num = i - offset + 1;
       var d;
       var muted = false;
-      
-      if(num < 1){
+
+      if (num < 1) {
         d = new Date(view.getFullYear(), view.getMonth() - 1, prevDays + num);
         muted = true;
-      } else if(num > daysInMonth){
+      } else if (num > daysInMonth) {
         d = new Date(view.getFullYear(), view.getMonth() + 1, num - daysInMonth);
         muted = true;
       } else {
         d = new Date(view.getFullYear(), view.getMonth(), num);
       }
 
-      var el = document.createElement("div");
-      el.className = "col";
       var cell = document.createElement("div");
-      cell.className = "day" + (muted ? " muted" : "");
-      
+      cell.className = "day";
+      if (muted) cell.className += " muted";
+
       var dMidnight = new Date(d.getFullYear(), d.getMonth(), d.getDate());
-      if(dMidnight.getTime() === todayMidnight.getTime()) {
-        cell.classList.add("today");
+      if (dMidnight.getTime() === todayMidnight.getTime()) {
+        cell.className += " today";
       }
-      
-      if(d.getMonth() === annivMonth && d.getDate() === annivDay) {
-        cell.classList.add("anniv");
+
+      if (d.getMonth() === start.getMonth() && d.getDate() === start.getDate()) {
+        cell.className += " anniv";
         cell.innerHTML = '<span class="date-num">' + d.getDate() + '</span><span class="heart-mini">♡</span>';
-        cell.title = "Výročie vášho začiatku";
       } else {
-        cell.innerHTML = '<span class="date-num">' + d.getDate() + '</span>';
+        cell.innerHTML = '<span class="date-num">' + d.getDate() + "</span>";
       }
-      
+
       (function(dateObj) {
-        cell.addEventListener("click", function(){
-          var dMidnight = new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate());
-          var startMidnight = new Date(start.getFullYear(), start.getMonth(), start.getDate());
-          var diff = Math.ceil(Math.abs(dMidnight.getTime() - startMidnight.getTime()) / (1000 * 60 * 60 * 24));
-          if(diff >= 0) {
-            showToast(fmt(dateObj) + " — váš " + diff + ". deň spolu ♡");
+        cell.addEventListener("click", function() {
+          var clicked = new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate());
+          var startM = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+          var diff = daysBetween(startM, clicked);
+          var toast = document.getElementById("loveToast");
+          var msg = document.getElementById("toastMsg");
+          if (clicked.getTime() < startM.getTime()) {
+            msg.textContent = fmt(dateObj) + " — ešte ste spolu neboli ♡";
+          } else {
+            msg.textContent = fmt(dateObj) + " — váš " + diff + ". deň spolu ♡";
           }
+          toast.style.display = "block";
+          setTimeout(function() { toast.style.display = "none"; }, 2500);
         });
       })(d);
-      
-      el.appendChild(cell);
-      grid.appendChild(el);
+
+      grid.appendChild(cell);
     }
   }
 
-  function showToast(text){
-    var toastBody = document.querySelector("#loveToast .toast-body");
-    if (toastBody) {
-      toastBody.textContent = text;
-    }
-    var toastEl = document.getElementById("loveToast");
-    if (toastEl && typeof bootstrap !== 'undefined') {
-      var toast = bootstrap.Toast.getOrCreateInstance(toastEl, {delay: 2600});
-      toast.show();
-    } else {
-      alert(text);
-    }
-  }
-
-  var prevBtn = document.getElementById("prev");
-  var nextBtn = document.getElementById("next");
-  if (prevBtn) {
-    prevBtn.onclick = function(){ view.setMonth(view.getMonth() - 1); renderCalendar(); };
-  }
-  if (nextBtn) {
-    nextBtn.onclick = function(){ view.setMonth(view.getMonth() + 1); renderCalendar(); };
-  }
-
-  function updateClock(){
-    var now = new Date();
-    var timeStr = now.toLocaleTimeString("sk-SK", {hour: "2-digit", minute: "2-digit", second: "2-digit"});
-    var clockEl = document.getElementById("currentTime");
-    if (clockEl) {
-      clockEl.textContent = timeStr;
-    }
-  }
-
-  // ——— NOVÉ PLÁVAJÚCE SRDIEČKA (VYLEPŠENÉ) ———
+  // ——— FUNKCIA NA TVORBU PLÁVAJÚCICH SRDIEČOK ———
   function createFloatingHeart() {
     var heart = document.createElement("div");
     heart.className = "floating-heart";
-    
-    // Rôzne symboly srdiečok
+
     var symbols = ["♡", "♥", "💕", "💗", "❤️", "💖"];
     heart.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-    
-    // Náhodná farba z palety ružových odtieňov
+
     var colors = ["#ff6f9f", "#ff4d6d", "#ff85a1", "#ffb6cc", "#ff3b6f", "#ff99b3"];
     heart.style.color = colors[Math.floor(Math.random() * colors.length)];
-    
-    // Náhodná veľkosť (20–50px)
+
     var size = 20 + Math.random() * 30;
     heart.style.fontSize = size + "px";
-    
-    // Náhodná pozícia vodorovne
+
     heart.style.left = Math.random() * 100 + "vw";
-    
-    // Náhodná dĺžka animácie (6–10 sekúnd)
+
     var duration = 6 + Math.random() * 4;
     heart.style.animationDuration = duration + "s";
-    
-    // Náhodné oneskorenie (aby nešli všetky naraz)
     heart.style.animationDelay = (Math.random() * 0.8) + "s";
-    
-    // Pridáme do tela
+
     document.body.appendChild(heart);
-    
-    // Po skončení animácie odstránime
+
     setTimeout(function() {
       if (heart.parentNode) heart.remove();
     }, duration * 1000 + 200);
   }
 
-  // Spúšťame nové srdiečka každých 500 ms (viac ich lieta)
+  // Spúšťame nové srdiečka každých 500 ms
   setInterval(createFloatingHeart, 500);
-  // Hneď na začiatku ich pár vytvoríme
+  // Hneď na začiatku ich zopár vytvoríme
   for (var i = 0; i < 6; i++) {
     setTimeout(createFloatingHeart, i * 300);
   }
-  // ——— KONIEC NOVÝCH SRDIEČOK ———
+  // ——— KONIEC SRDIEČOK ———
 
-  // Spustenie základných funkcií
+  updateClock();
   updateStats();
   renderCalendar();
-  updateClock();
+  setInterval(updateClock, 1000);
+  setInterval(updateStats, 60000);
 
-  // Pravidelná aktualizácia času a štatistík
-  setInterval(function(){ 
-    updateStats(); 
-    updateClock(); 
-  }, 1000);
-})();
+  var prevBtn = document.getElementById("prev");
+  var nextBtn = document.getElementById("next");
+
+  if (prevBtn) {
+    prevBtn.addEventListener("click", function() {
+      view.setDate(1);
+      view.setMonth(view.getMonth() - 1);
+      renderCalendar();
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener("click", function() {
+      view.setDate(1);
+      view.setMonth(view.getMonth() + 1);
+      renderCalendar();
+    });
+  }
 </script>
-<footer class="text-center small opacity-50 pb-4">Vytvoril: Mgr. Peter Galko</footer>
+
 </body>
 </html>
