@@ -34,7 +34,7 @@ Interaktívna webová aplikácia, ktorá počítade dni, mesiace a roky od zači
 
 ## 📁 Štruktúra súborov
 index.html, test.html , test.js , test.json
-
+---
 
 🤝 Autor
 Mgr. Peter Galko
