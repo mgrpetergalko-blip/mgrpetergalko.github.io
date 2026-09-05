@@ -28,11 +28,18 @@ Interaktívna webová aplikácia, ktorá počítade dni, mesiace a roky od zači
 - **JavaScript (vanilla)** – všetka logika (žiadny framework)
 - **Bootstrap 5** – iba na mriežkový systém a tlačidlá
 - **Google Fonts** – písmo *Quicksand*
-
-##  Používajte zo svojou láskou praje autor Mgr. Peter Galko
 - **PWA (Progressive Web App)** – manifest.json + Service Worker
 
 ---
 
 ## 📁 Štruktúra súborov
 index.html, test.html , test.js , test.json
+
+
+🤝 Autor
+Mgr. Peter Galko
+Vytvorené s láskou 💗
+
+📄 Licencia
+Tento projekt je určený na osobné použitie. Ak ho chceš zdieľať alebo upravovať, prosím o uvedenie autora.
+
