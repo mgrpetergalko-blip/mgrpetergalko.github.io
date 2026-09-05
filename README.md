@@ -39,7 +39,7 @@ index.html, test.html , test.js , test.json
 🤝 Autor
 Mgr. Peter Galko
 Vytvorené s láskou 💗
-
+---
 📄 Licencia
 Tento projekt je určený na osobné použitie. Ak ho chceš zdieľať alebo upravovať, prosím o uvedenie autora.
 
