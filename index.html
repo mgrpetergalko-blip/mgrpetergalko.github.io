@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Náš spoločný čas ♡ — Mgr. Peter Galko</title>
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <style>
@@ -14,7 +15,9 @@
       --ink: #49343d;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       min-height: 100vh;
@@ -25,7 +28,10 @@
       overflow-x: hidden;
     }
 
-    .app { max-width: 1100px; position: relative; }
+    .app {
+      max-width: 1100px;
+      position: relative;
+    }
 
     .glass {
       background: rgba(255, 255, 255, .85);
@@ -34,11 +40,69 @@
       border-radius: 28px;
     }
 
-    .hero { padding: 34px; }
-    .heart { font-size: 52px; display: inline-block; }
+    .hero {
+      padding: 34px;
+      position: relative;
+    }
 
-    .title { font-weight: 800; letter-spacing: -1px; }
-    .subtitle { opacity: .7; }
+    .live-time {
+      position: absolute;
+      top: 22px;
+      right: 28px;
+      background: rgba(255, 255, 255, .75);
+      border: 1px solid rgba(255, 111, 159, .18);
+      border-radius: 18px;
+      padding: 8px 13px;
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--pink);
+      box-shadow: 0 5px 18px rgba(180, 70, 105, .08);
+    }
+
+    .heart-wrapper {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 10px 0 15px;
+      position: relative;
+    }
+
+    /* SRDIEČKO POMOCOU SVG */
+    .heart-svg {
+      width: 110px;
+      height: 110px;
+      display: block;
+      filter: drop-shadow(0 8px 15px rgba(255, 111, 159, .3));
+    }
+
+    .heart-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-2deg);
+      color: white;
+      font-size: 14px;
+      font-weight: 800;
+      text-align: center;
+      line-height: 1.2;
+      pointer-events: none;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      width: 80px;
+    }
+
+    .heart-text small {
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .title {
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .subtitle {
+      opacity: .7;
+    }
 
     .stat {
       border-radius: 22px;
@@ -61,7 +125,9 @@
       opacity: .65;
     }
 
-    .calendar { padding: 25px; }
+    .calendar {
+      padding: 25px;
+    }
 
     .calendar-head {
       display: flex;
@@ -109,14 +175,33 @@
       gap: 3px;
     }
 
-    .day.muted { opacity: .25; }
-    .day.today { border-color: var(--pink); font-weight: bold; }
-    .day.anniv { background: #ffe2ec; border-color: var(--pink2); }
+    .day.muted {
+      opacity: .25;
+    }
 
-    .day .heart-mini { font-size: 12px; }
-    .day .date-num { font-weight: 700; font-size: 0.95rem; }
+    .day.today {
+      border-color: var(--pink);
+      font-weight: bold;
+    }
 
-    .legend { font-size: .82rem; opacity: .65; }
+    .day.anniv {
+      background: #ffe2ec;
+      border-color: var(--pink2);
+    }
+
+    .day .heart-mini {
+      font-size: 12px;
+    }
+
+    .day .date-num {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .legend {
+      font-size: .82rem;
+      opacity: .65;
+    }
 
     .toast-love {
       position: fixed;
@@ -127,241 +212,319 @@
     }
 
     @media (max-width: 576px) {
-      .hero { padding: 20px 14px; }
-      .calendar { padding: 14px; }
-      .calendar-grid { gap: 3px; }
-      .day { min-height: 50px; border-radius: 10px; }
-      .weekday { font-size: .65rem; height: 28px; }
-      .stat .num { font-size: 28px; }
+      .hero {
+        padding: 20px 14px;
+      }
+
+      .calendar {
+        padding: 14px;
+      }
+
+      .calendar-grid {
+        gap: 3px;
+      }
+
+      .day {
+        min-height: 50px;
+        border-radius: 10px;
+      }
+
+      .weekday {
+        font-size: .65rem;
+        height: 28px;
+      }
+
+      .stat .num {
+        font-size: 28px;
+      }
+
+      .live-time {
+        top: 12px;
+        right: 12px;
+        font-size: .75rem;
+        padding: 6px 9px;
+      }
+
+      .heart-svg {
+        width: 90px;
+        height: 90px;
+      }
+
+      .heart-text {
+        font-size: 12px;
+        width: 70px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container app py-4 py-md-5">
+<div class="container app py-4 py-md-5">
 
-    <section class="glass hero mb-4 text-center">
-      <div class="heart">♡</div>
-      <h1 class="title display-5 mt-2 mb-2">Náš spoločný čas</h1>
-      <p class="subtitle mb-4">Každý deň je ďalší malý kúsok nášho príbehu.</p>
+  <section class="glass hero mb-4 text-center">
 
-      <div class="row g-3">
-        <div class="col-4">
-          <div class="stat">
-            <div class="num" id="days">...</div>
-            <div class="label">dní</div>
-          </div>
-        </div>
+    <div class="live-time">
+      🕐 <span id="liveTime">--:--:--</span>
+    </div>
 
-        <div class="col-4">
-          <div class="stat">
-            <div class="num" id="months">...</div>
-            <div class="label">mesiacov</div>
-          </div>
-        </div>
-
-        <div class="col-4">
-          <div class="stat">
-            <div class="num" id="years">...</div>
-            <div class="label">rokov</div>
-          </div>
-        </div>
-      </div>
-
-      <p class="mt-4 mb-1 fw-semibold">
-        Spolu od <span id="sinceText">...</span> • dnes <span id="todayText">...</span>
-      </p>
-    </section>
-
-    <section class="glass calendar mb-4">
-      <div class="calendar-head">
-        <button class="btn btn-light rounded-4" id="prev" type="button">‹</button>
-        <div class="month-title" id="monthTitle">...</div>
-        <button class="btn btn-light rounded-4" id="next" type="button">›</button>
-      </div>
-
-      <div class="calendar-grid" id="calendarGrid"></div>
-
-      <div class="legend mt-3 text-center">
-        ♡ označuje váš výnimočný deň • obrys označuje dnešok
-      </div>
-    </section>
-
-    <section class="glass p-4 text-center">
-      <h5 class="fw-bold mb-2">Náš začiatok 💗</h5>
-      <div class="fs-4 fw-bold" style="color:var(--pink)">24. 11. 2024</div>
-    </section>
-
-  </div>
-
-  <div class="toast-love" id="loveToast">
-    <div class="toast show align-items-center border-0 shadow">
-      <div class="d-flex">
-        <div class="toast-body" id="toastMsg"></div>
+    <!-- SRDIEČKO SVG -->
+    <div class="heart-wrapper">
+      <svg class="heart-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 88 C20 65 0 50 0 30 C0 12 15 0 30 0 C40 0 46 6 50 14 C54 6 60 0 70 0 C85 0 100 12 100 30 C100 50 80 65 50 88 Z" fill="#ff6f9f"/>
+      </svg>
+      <div class="heart-text">
+        24. 11.<br><small>2024</small>
       </div>
     </div>
+
+    <h1 class="title display-5 mt-2 mb-2">
+      Náš spoločný čas
+    </h1>
+
+    <p class="subtitle mb-4">
+      Každý deň je ďalší malý kúsok nášho príbehu.
+    </p>
+
+    <div class="row g-3">
+
+      <div class="col-4">
+        <div class="stat">
+          <div class="num" id="days">...</div>
+          <div class="label">dní</div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class="stat">
+          <div class="num" id="months">...</div>
+          <div class="label">mesiacov</div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class="stat">
+          <div class="num" id="years">...</div>
+          <div class="label">rokov</div>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="mt-4 mb-1 fw-semibold">
+      Spolu od <span id="sinceText">...</span>
+      • dnes <span id="todayText">...</span>
+    </p>
+
+  </section>
+
+  <section class="glass calendar mb-4">
+
+    <div class="calendar-head">
+      <button class="btn btn-light rounded-4" id="prev" type="button">‹</button>
+
+      <div class="month-title" id="monthTitle">...</div>
+
+      <button class="btn btn-light rounded-4" id="next" type="button">›</button>
+    </div>
+
+    <div class="calendar-grid" id="calendarGrid"></div>
+
+    <div class="legend mt-3 text-center">
+      ♡ označuje váš výnimočný deň • obrys označuje dnešok
+    </div>
+
+  </section>
+
+  <section class="glass p-4 text-center">
+
+    <h5 class="fw-bold mb-2">
+      Náš začiatok 💗
+    </h5>
+
+    <div class="fs-4 fw-bold" style="color:var(--pink)">
+      24. 11. 2024
+    </div>
+
+  </section>
+
+</div>
+
+<div class="toast-love" id="loveToast">
+
+  <div class="toast show align-items-center border-0 shadow">
+
+    <div class="d-flex">
+
+      <div class="toast-body" id="toastMsg"></div>
+
+    </div>
+
   </div>
 
-  <footer class="text-center small opacity-50 py-4">
-    Vytvoril: Mgr. Peter Galko
-  </footer>
+</div>
 
-  <!-- SKRIPT JE NA KONCI A SPÚŠŤA SA OKAMŽITE -->
-  <script>
-    var skMonths = [
-      "január", "február", "marec", "apríl", "máj", "jún",
-      "júl", "august", "september", "október", "november", "december"
-    ];
+<footer class="text-center small opacity-50 py-4">
+  Vytvoril: Mgr. Peter Galko
+</footer>
 
-    var skWeek = ["Po", "Ut", "St", "Št", "Pi", "So", "Ne"];
+<script>
+  // (JavaScript zostáva rovnaký ako v pôvodnom kóde, len ho tu pre úplnosť uvádzam)
+  var skMonths = [
+    "január", "február", "marec", "apríl", "máj", "jún",
+    "júl", "august", "september", "október", "november", "december"
+  ];
 
-    var start = new Date(2024, 10, 24);
-    var view = new Date();
+  var skWeek = ["Po", "Ut", "St", "Št", "Pi", "So", "Ne"];
 
-    function pad(n) {
-      return (n < 10 ? '0' : '') + n;
+  var start = new Date(2024, 10, 24);
+  var view = new Date();
+
+  function pad(n) {
+    return (n < 10 ? '0' : '') + n;
+  }
+
+  function fmt(d) {
+    return pad(d.getDate()) + ". " +
+           skMonths[d.getMonth()] + " " +
+           d.getFullYear();
+  }
+
+  function daysBetween(a, b) {
+    var oneDay = 1000 * 60 * 60 * 24;
+    return Math.round((b.getTime() - a.getTime()) / oneDay);
+  }
+
+  function updateClock() {
+    var now = new Date();
+    var time = pad(now.getHours()) + ":" + pad(now.getMinutes()) + ":" + pad(now.getSeconds());
+    var clock = document.getElementById("liveTime");
+    if (clock) {
+      clock.textContent = time;
+    }
+  }
+
+  function updateStats() {
+    var today = new Date();
+    var todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    var startMidnight = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+    var days = daysBetween(startMidnight, todayMidnight);
+    var y = todayMidnight.getFullYear() - startMidnight.getFullYear();
+    var m = todayMidnight.getMonth() - startMidnight.getMonth();
+    if (m < 0) {
+      y--;
+      m += 12;
+    }
+    document.getElementById("days").textContent = days;
+    document.getElementById("months").textContent = (y * 12 + m);
+    document.getElementById("years").textContent = y;
+    document.getElementById("sinceText").textContent = fmt(startMidnight);
+    document.getElementById("todayText").textContent = fmt(todayMidnight);
+  }
+
+  function renderCalendar() {
+    var grid = document.getElementById("calendarGrid");
+    if (!grid) return;
+    grid.innerHTML = "";
+
+    for (var w = 0; w < skWeek.length; w++) {
+      var wEl = document.createElement("div");
+      wEl.className = "weekday";
+      wEl.textContent = skWeek[w];
+      grid.appendChild(wEl);
     }
 
-    function fmt(d) {
-      return pad(d.getDate()) + ". " + skMonths[d.getMonth()] + " " + d.getFullYear();
+    var elMonthTitle = document.getElementById("monthTitle");
+    if (elMonthTitle) {
+      elMonthTitle.textContent = skMonths[view.getMonth()] + " " + view.getFullYear();
     }
 
-    function daysBetween(a, b) {
-      var oneDay = 1000 * 60 * 60 * 24;
-      return Math.round((b.getTime() - a.getTime()) / oneDay);
-    }
+    var first = new Date(view.getFullYear(), view.getMonth(), 1);
+    var offset = (first.getDay() + 6) % 7;
+    var daysInMonth = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
+    var prevDays = new Date(view.getFullYear(), view.getMonth(), 0).getDate();
+    var total = Math.ceil((offset + daysInMonth) / 7) * 7;
 
-    function updateStats() {
-      var today = new Date();
-      var todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-      var startMidnight = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+    var today = new Date();
+    var todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
-      var days = daysBetween(startMidnight, todayMidnight);
-      
-      var y = todayMidnight.getFullYear() - startMidnight.getFullYear();
-      var m = todayMidnight.getMonth() - startMidnight.getMonth();
-      if (m < 0) {
-        y--;
-        m += 12;
+    for (var i = 0; i < total; i++) {
+      var num = i - offset + 1;
+      var d;
+      var muted = false;
+
+      if (num < 1) {
+        d = new Date(view.getFullYear(), view.getMonth() - 1, prevDays + num);
+        muted = true;
+      } else if (num > daysInMonth) {
+        d = new Date(view.getFullYear(), view.getMonth() + 1, num - daysInMonth);
+        muted = true;
+      } else {
+        d = new Date(view.getFullYear(), view.getMonth(), num);
       }
 
-      var elDays = document.getElementById("days");
-      var elMonths = document.getElementById("months");
-      var elYears = document.getElementById("years");
-      var elSince = document.getElementById("sinceText");
-      var elToday = document.getElementById("todayText");
+      var cell = document.createElement("div");
+      cell.className = "day";
+      if (muted) cell.className += " muted";
 
-      if (elDays) elDays.textContent = days;
-      if (elMonths) elMonths.textContent = (y * 12 + m);
-      if (elYears) elYears.textContent = y;
-      if (elSince) elSince.textContent = fmt(startMidnight);
-      if (elToday) elToday.textContent = fmt(todayMidnight);
-    }
-
-    function renderCalendar() {
-      var grid = document.getElementById("calendarGrid");
-      if (!grid) return;
-      grid.innerHTML = "";
-
-      for (var w = 0; w < skWeek.length; w++) {
-        var wEl = document.createElement("div");
-        wEl.className = "weekday";
-        wEl.textContent = skWeek[w];
-        grid.appendChild(wEl);
+      var dMidnight = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+      if (dMidnight.getTime() === todayMidnight.getTime()) {
+        cell.className += " today";
       }
 
-      var elMonthTitle = document.getElementById("monthTitle");
-      if (elMonthTitle) {
-        elMonthTitle.textContent = skMonths[view.getMonth()] + " " + view.getFullYear();
+      if (d.getMonth() === start.getMonth() && d.getDate() === start.getDate()) {
+        cell.className += " anniv";
+        cell.innerHTML = '<span class="date-num">' + d.getDate() + '</span><span class="heart-mini">♡</span>';
+      } else {
+        cell.innerHTML = '<span class="date-num">' + d.getDate() + "</span>";
       }
 
-      var first = new Date(view.getFullYear(), view.getMonth(), 1);
-      var offset = (first.getDay() + 6) % 7;
-      var daysInMonth = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
-      var prevDays = new Date(view.getFullYear(), view.getMonth(), 0).getDate();
-      var total = Math.ceil((offset + daysInMonth) / 7) * 7;
+      (function(dateObj) {
+        cell.addEventListener("click", function() {
+          var clicked = new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate());
+          var startM = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+          var diff = daysBetween(startM, clicked);
+          var toast = document.getElementById("loveToast");
+          var msg = document.getElementById("toastMsg");
+          if (clicked.getTime() < startM.getTime()) {
+            msg.textContent = fmt(dateObj) + " — ešte ste spolu neboli ♡";
+          } else {
+            msg.textContent = fmt(dateObj) + " — váš " + diff + ". deň spolu ♡";
+          }
+          toast.style.display = "block";
+          setTimeout(function() { toast.style.display = "none"; }, 2500);
+        });
+      })(d);
 
-      var today = new Date();
-      var todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-
-      for (var i = 0; i < total; i++) {
-        var num = i - offset + 1;
-        var d, muted = false;
-
-        if (num < 1) {
-          d = new Date(view.getFullYear(), view.getMonth() - 1, prevDays + num);
-          muted = true;
-        } else if (num > daysInMonth) {
-          d = new Date(view.getFullYear(), view.getMonth() + 1, num - daysInMonth);
-          muted = true;
-        } else {
-          d = new Date(view.getFullYear(), view.getMonth(), num);
-        }
-
-        var cell = document.createElement("div");
-        cell.className = "day";
-        if (muted) cell.className += " muted";
-
-        var dMidnight = new Date(d.getFullYear(), d.getMonth(), d.getDate());
-
-        if (dMidnight.getTime() === todayMidnight.getTime()) {
-          cell.className += " today";
-        }
-
-        if (d.getMonth() === start.getMonth() && d.getDate() === start.getDate()) {
-          cell.className += " anniv";
-          cell.innerHTML = '<span class="date-num">' + d.getDate() + '</span><span class="heart-mini">♡</span>';
-        } else {
-          cell.innerHTML = '<span class="date-num">' + d.getDate() + "</span>";
-        }
-
-        (function (dateObj) {
-          cell.addEventListener("click", function () {
-            var clicked = new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate());
-            var startM = new Date(start.getFullYear(), start.getMonth(), start.getDate());
-            var diff = daysBetween(startM, clicked);
-
-            var toast = document.getElementById("loveToast");
-            var msg = document.getElementById("toastMsg");
-
-            if (clicked.getTime() < startM.getTime()) {
-              msg.textContent = fmt(dateObj) + " — ešte ste spolu neboli ♡";
-            } else {
-              msg.textContent = fmt(dateObj) + " — váš " + diff + ". deň spolu ♡";
-            }
-
-            toast.style.display = "block";
-            setTimeout(function () { toast.style.display = "none"; }, 2500);
-          });
-        })(d);
-
-        grid.appendChild(cell);
-      }
+      grid.appendChild(cell);
     }
+  }
 
-    // Priame spustenie bez akéhokoľvek čakania
-    updateStats();
-    renderCalendar();
+  updateClock();
+  updateStats();
+  renderCalendar();
+  setInterval(updateClock, 1000);
+  setInterval(updateStats, 60000);
 
-    var prevBtn = document.getElementById("prev");
-    var nextBtn = document.getElementById("next");
+  var prevBtn = document.getElementById("prev");
+  var nextBtn = document.getElementById("next");
 
-    if (prevBtn) {
-      prevBtn.addEventListener("click", function () {
-        view.setDate(1);
-        view.setMonth(view.getMonth() - 1);
-        renderCalendar();
-      });
-    }
+  if (prevBtn) {
+    prevBtn.addEventListener("click", function() {
+      view.setDate(1);
+      view.setMonth(view.getMonth() - 1);
+      renderCalendar();
+    });
+  }
 
-    if (nextBtn) {
-      nextBtn.addEventListener("click", function () {
-        view.setDate(1);
-        view.setMonth(view.getMonth() + 1);
-        renderCalendar();
-      });
-    }
-  </script>
+  if (nextBtn) {
+    nextBtn.addEventListener("click", function() {
+      view.setDate(1);
+      view.setMonth(view.getMonth() + 1);
+      renderCalendar();
+    });
+  }
+</script>
+
 </body>
 </html>
