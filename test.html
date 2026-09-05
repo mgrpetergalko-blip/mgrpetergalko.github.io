@@ -1,0 +1,886 @@
+<!doctype html>
+<html lang="sk">
+<head><link rel="manifest" href="/manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Náš spoločný čas">
+<link rel="apple-touch-icon" href="icon-192.png">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Náš spoločný čas ♡ — Mgr. Peter Galko</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --pink: #ff6f9f;
+      --pink-light: #ffb6cc;
+      --pink-dark: #e04a7a;
+      --purple: #b8a9d4;
+      --lavender: #d9c9f0;
+      --glass-bg: rgba(255, 255, 255, 0.60);
+      --glass-border: rgba(255, 255, 255, 0.70);
+      --shadow: 0 20px 50px rgba(180, 70, 105, 0.15);
+      --radius: 32px;
+      --ink: #3d2c35;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Quicksand', -apple-system, sans-serif;
+      color: var(--ink);
+      background: linear-gradient(145deg, #fce4ec, #f3e5f5 40%, #fce4ec);
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    /* Pohyblivé bubliny na pozadí */
+    .bg-bubble {
+      position: fixed;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 182, 204, 0.25), rgba(255, 111, 159, 0.08));
+      pointer-events: none;
+      z-index: 0;
+      animation: floatBubble 18s infinite alternate ease-in-out;
+    }
+    .bg-bubble:nth-child(1) { width: 500px; height: 500px; top: -100px; left: -100px; animation-duration: 22s; }
+    .bg-bubble:nth-child(2) { width: 400px; height: 400px; bottom: -50px; right: -50px; animation-duration: 26s; animation-delay: -5s; }
+    .bg-bubble:nth-child(3) { width: 300px; height: 300px; top: 40%; left: 60%; animation-duration: 20s; animation-delay: -10s; background: radial-gradient(circle at 30% 30%, rgba(185, 170, 210, 0.2), rgba(255, 111, 159, 0.05)); }
+
+    @keyframes floatBubble {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(60px, -40px) scale(1.2); }
+    }
+
+    .app {
+      max-width: 1100px;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.8s ease-out;
+    }
+
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .glass {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      transition: transform 0.2s ease;
+    }
+    .glass:hover {
+      transform: scale(1.002);
+    }
+
+    /* ----- HERO ----- */
+    .hero {
+      padding: 40px 30px 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .live-time {
+      position: absolute;
+      top: 24px;
+      right: 28px;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 60px;
+      padding: 8px 18px 8px 20px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--pink-dark);
+      box-shadow: 0 6px 18px rgba(255, 111, 159, 0.12);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: 0.5px;
+    }
+    .live-time .clock-icon {
+      font-size: 1.2rem;
+    }
+
+    .heart-wrapper {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 10px 0 20px;
+      position: relative;
+    }
+    .heart-svg {
+      width: 140px;
+      height: 140px;
+      display: block;
+      filter: drop-shadow(0 12px 25px rgba(255, 111, 159, 0.35));
+      transition: transform 0.4s ease;
+    }
+    .heart-svg:hover {
+      transform: scale(1.05);
+    }
+    .heart-svg .sparkle {
+      animation: sparkle 2.8s infinite alternate;
+    }
+    @keyframes sparkle {
+      0% { opacity: 0.3; }
+      100% { opacity: 1; }
+    }
+    .heart-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-2deg);
+      color: white;
+      font-size: 18px;
+      font-weight: 800;
+      text-align: center;
+      line-height: 1.2;
+      pointer-events: none;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      width: 100px;
+    }
+    .heart-text small {
+      font-size: 13px;
+      font-weight: 600;
+      opacity: 0.9;
+    }
+
+    .title {
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      font-size: 2.8rem;
+      background: linear-gradient(135deg, var(--pink-dark), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: inline-block;
+    }
+    .subtitle {
+      opacity: 0.7;
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .stat {
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(4px);
+      padding: 20px 10px;
+      box-shadow: 0 6px 20px rgba(180, 70, 105, 0.08);
+      height: 100%;
+      transition: all 0.2s;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+    }
+    .stat:hover {
+      transform: translateY(-4px);
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 12px 30px rgba(180, 70, 105, 0.12);
+    }
+    .stat .num {
+      font-size: clamp(38px, 6vw, 54px);
+      font-weight: 800;
+      background: linear-gradient(145deg, var(--pink), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+    .stat .label {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      opacity: 0.6;
+      font-weight: 700;
+      margin-top: 6px;
+    }
+
+    .info-line {
+      font-weight: 600;
+      font-size: 0.95rem;
+      opacity: 0.8;
+      margin-top: 1.2rem;
+    }
+    .info-line span {
+      font-weight: 700;
+      color: var(--pink-dark);
+    }
+
+    /* ----- KALENDÁR ----- */
+    .calendar {
+      padding: 28px 25px 20px;
+    }
+    .calendar-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .month-title {
+      font-weight: 800;
+      font-size: 1.6rem;
+      letter-spacing: 1px;
+      background: linear-gradient(135deg, var(--pink-dark), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .btn-arrow {
+      width: 42px;
+      height: 42px;
+      border-radius: 60px;
+      border: none;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(4px);
+      font-size: 1.4rem;
+      font-weight: 300;
+      color: var(--ink);
+      transition: 0.2s;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
+    .btn-arrow:hover {
+      background: white;
+      box-shadow: 0 6px 20px rgba(180, 70, 105, 0.12);
+      transform: scale(1.05);
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+    }
+    .weekday {
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      opacity: 0.4;
+      letter-spacing: 0.5px;
+    }
+    .day {
+      width: 100%;
+      min-height: 60px;
+      border-radius: 18px;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.40);
+      border: 1px solid transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 2px;
+      transition: all 0.15s;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .day:hover {
+      background: rgba(255, 255, 255, 0.75);
+      transform: scale(1.04);
+      box-shadow: 0 6px 20px rgba(180, 70, 105, 0.08);
+    }
+    .day.muted {
+      opacity: 0.25;
+    }
+    .day.today {
+      border-color: var(--pink);
+      background: rgba(255, 111, 159, 0.12);
+      font-weight: 800;
+      box-shadow: inset 0 0 0 2px rgba(255, 111, 159, 0.15);
+    }
+    /* Štart vzťahu – pôvodné výročie */
+    .day.anniv {
+      background: linear-gradient(135deg, #fff5f8, #ffe2ec);
+      border-color: var(--pink-light);
+    }
+    /* Narodeniny – každý rok 16. júl (teraz s dvoma srdiečkami) */
+    .day.birthday {
+      background: linear-gradient(135deg, #fff3e0, #ffecb3);
+      border-color: #ffb74d;
+    }
+    /* Výročie začiatku – každý rok 24. november */
+    .day.anniversary {
+      background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+      border-color: #ce93d8;
+    }
+    .day .heart-mini {
+      font-size: 13px;
+      line-height: 1;
+    }
+    .day .date-num {
+      font-weight: 700;
+    }
+    .legend {
+      font-size: 0.8rem;
+      opacity: 0.6;
+      margin-top: 16px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .legend-dot {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border-radius: 6px;
+      margin-right: 4px;
+    }
+    .legend-dot.anniv-dot { background: linear-gradient(135deg, #fff5f8, #ffe2ec); border: 1px solid var(--pink-light); }
+    .legend-dot.birthday-dot { background: linear-gradient(135deg, #fff3e0, #ffecb3); border: 1px solid #ffb74d; }
+    .legend-dot.anniversary-dot { background: linear-gradient(135deg, #f3e5f5, #e1bee7); border: 1px solid #ce93d8; }
+
+    /* ----- MILESTONES (VÝZNAMNÉ DNI) ----- */
+    .milestones {
+      padding: 28px 25px 20px;
+    }
+    .milestones-title {
+      font-weight: 800;
+      font-size: 1.3rem;
+      margin-bottom: 1.2rem;
+      opacity: 0.7;
+      letter-spacing: 0.5px;
+    }
+    .milestone-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 18px;
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(4px);
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      transition: all 0.2s;
+      height: 100%;
+    }
+    .milestone-item:hover {
+      background: rgba(255, 255, 255, 0.8);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(180, 70, 105, 0.08);
+    }
+    .milestone-icon {
+      font-size: 2.2rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .milestone-info {
+      flex: 1;
+    }
+    .milestone-title {
+      font-weight: 700;
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+    .milestone-date {
+      font-size: 0.9rem;
+      font-weight: 600;
+      opacity: 0.6;
+    }
+    .milestone-countdown {
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--pink-dark);
+      margin-top: 2px;
+    }
+    .milestone-countdown .highlight {
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ----- SEKCIJA NÁŠ ZAČIATOK ----- */
+    .start-section {
+      padding: 28px;
+      text-align: center;
+    }
+    .start-section h5 {
+      font-weight: 800;
+      opacity: 0.7;
+      letter-spacing: 1px;
+    }
+    .start-date {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ----- TOAST ----- */
+    .toast-love {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      z-index: 999;
+      display: none;
+    }
+    .toast-love .toast {
+      background: rgba(255, 255, 255, 0.90);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 16px 40px rgba(180, 70, 105, 0.15);
+      border-radius: 40px;
+      padding: 14px 28px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .toast-love .toast-body {
+      padding: 0;
+    }
+
+    /* ----- LIETAJÚCE SRDIEČKA ----- */
+    .floating-heart {
+      position: fixed;
+      bottom: -80px;
+      pointer-events: none;
+      z-index: 9999;
+      font-size: 28px;
+      opacity: 0.8;
+      animation: floatUp linear forwards;
+      text-shadow: 0 6px 20px rgba(255, 111, 159, 0.3);
+      transform-origin: center;
+      will-change: transform, opacity;
+    }
+    @keyframes floatUp {
+      0% {
+        opacity: 0.9;
+        transform: translateY(0) scale(0.4) rotate(0deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-110vh) scale(1.6) rotate(40deg);
+      }
+    }
+
+    /* ----- RESPONZIVITA ----- */
+    @media (max-width: 576px) {
+      .hero { padding: 20px 14px; }
+      .calendar { padding: 16px; }
+      .milestones { padding: 16px; }
+      .calendar-grid { gap: 4px; }
+      .day { min-height: 48px; border-radius: 12px; font-size: 0.85rem; }
+      .weekday { font-size: 0.65rem; height: 28px; }
+      .stat .num { font-size: 30px; }
+      .live-time { top: 12px; right: 12px; font-size: 0.75rem; padding: 5px 12px; }
+      .heart-svg { width: 110px; height: 110px; }
+      .heart-text { font-size: 14px; width: 80px; }
+      .title { font-size: 2rem; }
+      .subtitle { font-size: 0.95rem; }
+      .btn-arrow { width: 36px; height: 36px; font-size: 1.2rem; }
+      .start-date { font-size: 1.5rem; }
+      .toast-love { right: 12px; bottom: 12px; }
+      .toast-love .toast { padding: 10px 18px; font-size: 0.9rem; }
+      .milestone-item { flex-direction: column; text-align: center; gap: 8px; padding: 12px; }
+      .milestone-icon { font-size: 1.8rem; }
+      .legend { font-size: 0.7rem; gap: 6px; }
+    }
+
+    @media (min-width: 992px) {
+      .day { min-height: 72px; }
+    }
+
+    .footer {
+      text-align: center;
+      opacity: 0.4;
+      font-size: 0.8rem;
+      padding: 24px 0 8px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Pozadie -->
+<div class="bg-bubble"></div>
+<div class="bg-bubble"></div>
+<div class="bg-bubble"></div>
+
+<div class="container app py-3 py-md-4">
+
+  <!-- HERO -->
+  <section class="glass hero mb-4 text-center">
+    <div class="live-time">
+      <span class="clock-icon">🕐</span>
+      <span id="liveTime">--:--:--</span>
+    </div>
+
+    <div class="heart-wrapper">
+      <svg class="heart-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ff6f9f" />
+            <stop offset="100%" stop-color="#d9a6c4" />
+          </linearGradient>
+        </defs>
+        <path d="M50 88 C20 65 0 50 0 30 C0 12 15 0 30 0 C40 0 46 6 50 14 C54 6 60 0 70 0 C85 0 100 12 100 30 C100 50 80 65 50 88 Z" fill="url(#heartGrad)"/>
+        <path d="M20 30 Q30 12 45 22 Q35 28 25 35 Q18 40 20 30Z" fill="white" opacity="0.25" class="sparkle"/>
+      </svg>
+      <div class="heart-text">
+        24. 11.<br><small>2024</small>
+      </div>
+    </div>
+
+    <h1 class="title display-5 mt-2 mb-2">Náš spoločný čas</h1>
+    <p class="subtitle mb-4">Každý deň je ďalší malý kúsok nášho príbehu.</p>
+
+    <div class="row g-3">
+      <div class="col-4"><div class="stat"><div class="num" id="days">...</div><div class="label">dní</div></div></div>
+      <div class="col-4"><div class="stat"><div class="num" id="months">...</div><div class="label">mesiacov</div></div></div>
+      <div class="col-4"><div class="stat"><div class="num" id="years">...</div><div class="label">rokov</div></div></div>
+    </div>
+
+    <div class="info-line">
+      Spolu od <span id="sinceText">...</span> • dnes <span id="todayText">...</span>
+    </div>
+  </section>
+
+  <!-- KALENDÁR -->
+  <section class="glass calendar mb-4">
+    <div class="calendar-head">
+      <button class="btn-arrow" id="prev" type="button">‹</button>
+      <div class="month-title" id="monthTitle">...</div>
+      <button class="btn-arrow" id="next" type="button">›</button>
+    </div>
+    <div class="calendar-grid" id="calendarGrid"></div>
+    <div class="legend">
+      <span class="legend-item"><span class="legend-dot anniv-dot"></span> začiatok vzťahu</span>
+      <span class="legend-item"><span class="legend-dot birthday-dot"></span> 💕 narodeniny</span>
+      <span class="legend-item"><span class="legend-dot anniversary-dot"></span> 💞 výročie začiatku</span>
+      <span class="legend-item">◯ dnešok</span>
+    </div>
+  </section>
+
+  <!-- MILESTONES (VÝZNAMNÉ DNI) -->
+  <section class="glass milestones mb-4">
+    <h5 class="text-center milestones-title">💕 Významné dni</h5>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <div class="milestone-item">
+          <div class="milestone-icon">💕</div> <!-- zmena z 🎂 na 💕 -->
+          <div class="milestone-info">
+            <div class="milestone-title">Naše narodeniny</div>
+            <div class="milestone-date">16. júl</div>
+            <div class="milestone-countdown" id="birthdayCountdown">...</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="milestone-item">
+          <div class="milestone-icon">💞</div>
+          <div class="milestone-info">
+            <div class="milestone-title">Výročie začiatku</div>
+            <div class="milestone-date">24. november</div>
+            <div class="milestone-countdown" id="anniversaryCountdown">...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NÁŠ ZAČIATOK -->
+  <section class="glass start-section">
+    <h5 class="fw-bold mb-2">💗 Náš začiatok</h5>
+    <div class="start-date">24. 11. 2024</div>
+  </section>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast-love" id="loveToast">
+  <div class="toast show align-items-center border-0 shadow" role="alert">
+    <div class="d-flex">
+      <div class="toast-body" id="toastMsg">♡ Každý deň spolu sa počíta.</div>
+      <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">Vytvoril: Mgr. Peter Galko</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  (function() {
+    'use strict';
+
+    // ---------- KONFIGURÁCIA ----------
+    const skMonths = ["január","február","marec","apríl","máj","jún","júl","august","september","október","november","december"];
+    const skWeek = ["Po","Ut","St","Št","Pi","So","Ne"];
+    const START_DATE = new Date(2024, 10, 24);
+    const BIRTHDAY = { month: 6, day: 16 };   // 16. júl
+    const ANNIVERSARY = { month: 10, day: 24 }; // 24. november
+
+    let start = new Date(START_DATE);
+    let view = new Date();
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+    function fmt(d) { return pad(d.getDate()) + '. ' + skMonths[d.getMonth()] + ' ' + d.getFullYear(); }
+    function daysBetween(a, b) {
+      return Math.round((b.getTime() - a.getTime()) / (1000*60*60*24));
+    }
+
+    function daysUntil(month, day) {
+      const now = new Date();
+      let target = new Date(now.getFullYear(), month, day);
+      if (target < now) {
+        target = new Date(now.getFullYear() + 1, month, day);
+      }
+      return Math.ceil((target - now) / (1000*60*60*24));
+    }
+
+    // ---------- AKTUALIZÁCIA ŠTATISTÍK ----------
+    function updateStats() {
+      const today = new Date();
+      const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const startMidnight = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+      const days = daysBetween(startMidnight, todayMidnight);
+
+      let y = todayMidnight.getFullYear() - startMidnight.getFullYear();
+      let m = todayMidnight.getMonth() - startMidnight.getMonth();
+      if (m < 0) { y--; m += 12; }
+
+      document.getElementById('days').textContent = days;
+      document.getElementById('months').textContent = y * 12 + m;
+      document.getElementById('years').textContent = y;
+      document.getElementById('sinceText').textContent = fmt(startMidnight);
+      document.getElementById('todayText').textContent = fmt(todayMidnight);
+    }
+
+    // ---------- AKTUALIZÁCIA HODÍN ----------
+    function updateClock() {
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString('sk-SK', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      document.getElementById('liveTime').textContent = timeStr;
+    }
+
+    // ---------- AKTUALIZÁCIA MILESTONES ----------
+    function updateMilestones() {
+      const now = new Date();
+      const isBirthday = (now.getMonth() === BIRTHDAY.month && now.getDate() === BIRTHDAY.day);
+      const isAnniversary = (now.getMonth() === ANNIVERSARY.month && now.getDate() === ANNIVERSARY.day);
+
+      const birthdayEl = document.getElementById('birthdayCountdown');
+      const annivEl = document.getElementById('anniversaryCountdown');
+
+      if (isBirthday) {
+        birthdayEl.innerHTML = '💕 Dnes máme narodeniny! 🥳';
+      } else {
+        const days = daysUntil(BIRTHDAY.month, BIRTHDAY.day);
+        birthdayEl.innerHTML = `o <span class="highlight">${days}</span> dní`;
+      }
+
+      if (isAnniversary) {
+        annivEl.innerHTML = '💗 Dnes je výročie nášho začiatku! 💞';
+      } else {
+        const days = daysUntil(ANNIVERSARY.month, ANNIVERSARY.day);
+        annivEl.innerHTML = `o <span class="highlight">${days}</span> dní`;
+      }
+    }
+
+    // ---------- VYKRESLENIE KALENDÁRA (S OZNAČENÍM VŠETKÝCH UDALOSTÍ) ----------
+    function renderCalendar() {
+      const grid = document.getElementById('calendarGrid');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      skWeek.forEach(w => {
+        const el = document.createElement('div');
+        el.className = 'weekday';
+        el.textContent = w;
+        grid.appendChild(el);
+      });
+
+      document.getElementById('monthTitle').textContent = skMonths[view.getMonth()] + ' ' + view.getFullYear();
+
+      const first = new Date(view.getFullYear(), view.getMonth(), 1);
+      const offset = (first.getDay() + 6) % 7;
+      const daysInMonth = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
+      const prevDays = new Date(view.getFullYear(), view.getMonth(), 0).getDate();
+      const total = Math.ceil((offset + daysInMonth) / 7) * 7;
+
+      const today = new Date();
+      const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+      const startMonth = start.getMonth();
+      const startDay = start.getDate();
+
+      for (let i = 0; i < total; i++) {
+        let num = i - offset + 1;
+        let d, muted = false;
+
+        if (num < 1) {
+          d = new Date(view.getFullYear(), view.getMonth() - 1, prevDays + num);
+          muted = true;
+        } else if (num > daysInMonth) {
+          d = new Date(view.getFullYear(), view.getMonth() + 1, num - daysInMonth);
+          muted = true;
+        } else {
+          d = new Date(view.getFullYear(), view.getMonth(), num);
+        }
+
+        const cell = document.createElement('div');
+        cell.className = 'day' + (muted ? ' muted' : '');
+
+        const dMidnight = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+        if (dMidnight.getTime() === todayMidnight.getTime()) {
+          cell.classList.add('today');
+        }
+
+        const isStart = (d.getMonth() === startMonth && d.getDate() === startDay);
+        const isBirthday = (d.getMonth() === BIRTHDAY.month && d.getDate() === BIRTHDAY.day);
+        const isAnniversary = (d.getMonth() === ANNIVERSARY.month && d.getDate() === ANNIVERSARY.day);
+
+        if (isStart) {
+          cell.classList.add('anniv');
+          cell.innerHTML = `<span class="date-num">${d.getDate()}</span><span class="heart-mini">♡</span>`;
+          cell.title = 'Začiatok vzťahu';
+        } else if (isBirthday) {
+          cell.classList.add('birthday');
+          cell.innerHTML = `<span class="date-num">${d.getDate()}</span><span class="heart-mini">💕</span>`; // zmena na 💕
+          cell.title = 'Naše narodeniny';
+        } else if (isAnniversary) {
+          cell.classList.add('anniversary');
+          cell.innerHTML = `<span class="date-num">${d.getDate()}</span><span class="heart-mini">💞</span>`;
+          cell.title = 'Výročie začiatku';
+        } else {
+          cell.innerHTML = `<span class="date-num">${d.getDate()}</span>`;
+        }
+
+        (function(dateObj) {
+          cell.addEventListener('click', function() {
+            const clicked = new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate());
+            const startM = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+            const msg = document.getElementById('toastMsg');
+
+            const isBirthdayClick = (clicked.getMonth() === BIRTHDAY.month && clicked.getDate() === BIRTHDAY.day);
+            const isAnniversaryClick = (clicked.getMonth() === ANNIVERSARY.month && clicked.getDate() === ANNIVERSARY.day);
+
+            if (isBirthdayClick) {
+              msg.textContent = '💕 Naše narodeniny! Dnes máme sviatok! 🥳';
+            } else if (isAnniversaryClick) {
+              const years = dateObj.getFullYear() - start.getFullYear();
+              msg.textContent = `💞 Výročie začiatku! Spolu už ${years} rok${years > 1 ? 'y' : ''}! 💗`;
+            } else {
+              const diff = Math.abs(daysBetween(startM, clicked));
+              if (clicked.getTime() < startM.getTime()) {
+                msg.textContent = fmt(dateObj) + ' — ešte ste spolu neboli ♡';
+              } else {
+                msg.textContent = fmt(dateObj) + ' — váš ' + diff + '. deň spolu ♡';
+              }
+            }
+
+            const toastEl = document.getElementById('loveToast');
+            if (typeof bootstrap !== 'undefined') {
+              const toast = bootstrap.Toast.getOrCreateInstance(toastEl, { delay: 2600 });
+              toast.show();
+            } else {
+              toastEl.style.display = 'block';
+              setTimeout(() => { toastEl.style.display = 'none'; }, 2600);
+            }
+          });
+        })(d);
+
+        grid.appendChild(cell);
+      }
+    }
+
+    // ---------- LIETAJÚCE SRDIEČKA ----------
+    function createFloatingHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'floating-heart';
+
+      const symbols = ['♡', '♥', '💕', '💗', '❤️', '💖', '🌸', '✨'];
+      heart.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+
+      const colors = ['#ff6f9f', '#ff4d6d', '#ff85a1', '#ffb6cc', '#b8a9d4', '#d9c9f0', '#ff3b6f'];
+      heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+
+      const size = 22 + Math.random() * 34;
+      heart.style.fontSize = size + 'px';
+
+      heart.style.left = Math.random() * 100 + 'vw';
+
+      const duration = 7 + Math.random() * 5;
+      heart.style.animationDuration = duration + 's';
+      heart.style.animationDelay = (Math.random() * 1.2) + 's';
+
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        if (heart.parentNode) heart.remove();
+      }, duration * 1000 + 300);
+    }
+
+    // ---------- INICIALIZÁCIA ----------
+    updateStats();
+    renderCalendar();
+    updateClock();
+    updateMilestones();
+
+    setInterval(updateClock, 1000);
+    setInterval(updateStats, 60000);
+    setInterval(updateMilestones, 60000);
+
+    document.getElementById('prev').addEventListener('click', () => {
+      view.setMonth(view.getMonth() - 1);
+      renderCalendar();
+    });
+    document.getElementById('next').addEventListener('click', () => {
+      view.setMonth(view.getMonth() + 1);
+      renderCalendar();
+    });
+
+    setInterval(createFloatingHeart, 450);
+    for (let i = 0; i < 8; i++) {
+      setTimeout(createFloatingHeart, i * 250);
+    }
+
+  })();
+</script>
+
+
+
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/sw.js")
+      .then(() => console.log("Service Worker registrovaný!"))
+      .catch((err) => console.log("Registrácia zlyhala:", err));
+  }
+</script>
+</body>
+</html>
