@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Náš spoločný čas ♡ — Mgr. Peter Galko</title>
+  <title>Náš spoločný čas ♡ — Peter & Erika</title>
 
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -432,6 +432,53 @@
       background-clip: text;
     }
 
+    /* ----- MENINY PETRA A ERIKY ----- */
+    .name-day-section { padding: 28px 25px 20px; }
+    .name-day-title {
+      font-weight: 800; font-size: 1.3rem; margin-bottom: 1.2rem;
+      opacity: .7; letter-spacing: .5px;
+    }
+    .nameday-card {
+      position: relative; overflow: hidden; display: flex; align-items: center;
+      gap: 16px; padding: 18px 20px; min-height: 118px;
+      background: rgba(255,255,255,.55); backdrop-filter: blur(6px);
+      border-radius: 26px; border: 1px solid rgba(255,255,255,.7);
+      box-shadow: 0 8px 26px rgba(180,70,105,.08); transition: all .2s ease;
+    }
+    .nameday-card:hover {
+      transform: translateY(-3px); background: rgba(255,255,255,.82);
+      box-shadow: 0 12px 30px rgba(180,70,105,.12);
+    }
+    .nameday-card.peter { background: linear-gradient(135deg,rgba(255,255,255,.65),rgba(217,201,240,.42)); }
+    .nameday-card.erika { background: linear-gradient(135deg,rgba(255,255,255,.65),rgba(255,182,204,.38)); }
+    .nameday-icon {
+      width: 58px; height: 58px; flex: 0 0 58px; border-radius: 20px;
+      display: flex; align-items: center; justify-content: center; font-size: 1.8rem;
+      background: rgba(255,255,255,.72); box-shadow: 0 6px 18px rgba(180,70,105,.08);
+    }
+    .nameday-info { flex: 1; min-width: 0; }
+    .nameday-name { font-size: 1.2rem; font-weight: 800; color: var(--pink-dark); }
+    .nameday-date { font-size: .88rem; font-weight: 700; opacity: .58; margin-top: 2px; }
+    .nameday-countdown { margin-top: 5px; font-size: 1.05rem; font-weight: 800; }
+    .nameday-countdown .highlight {
+      background: linear-gradient(135deg,var(--pink),var(--purple));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      font-size: 1.25rem;
+    }
+    .day.nameday-peter { background: linear-gradient(135deg,#f3e5f5,#e4d8f3); border-color:#c9b7df; }
+    .day.nameday-erika { background: linear-gradient(135deg,#fff0f5,#ffdce8); border-color:var(--pink-light); }
+    .day.nameday-peter .name-day,.day.nameday-erika .name-day {
+      background:rgba(255,255,255,.82); color:var(--pink-dark);
+    }
+    .legend-dot.nameday-peter-dot { background:linear-gradient(135deg,#f3e5f5,#e4d8f3); border:1px solid #c9b7df; }
+    .legend-dot.nameday-erika-dot { background:linear-gradient(135deg,#fff0f5,#ffdce8); border:1px solid var(--pink-light); }
+    @media (max-width:576px) {
+      .name-day-section { padding:16px; }
+      .nameday-card { min-height:105px; padding:14px; gap:11px; }
+      .nameday-icon { width:48px; height:48px; flex-basis:48px; border-radius:16px; font-size:1.5rem; }
+      .nameday-name { font-size:1.05rem; } .nameday-countdown { font-size:.95rem; }
+    }
+
     /* ----- SEKCIJA NÁŠ ZAČIATOK ----- */
     .start-section {
       padding: 28px;
@@ -593,7 +640,8 @@
       <span class="legend-item"><span class="legend-dot anniv-dot"></span> začiatok vzťahu</span>
       <span class="legend-item"><span class="legend-dot birthday-dot"></span> 💕 narodeniny</span>
       <span class="legend-item"><span class="legend-dot anniversary-dot"></span> 💞 výročie začiatku</span>
-      <span class="legend-item">🎉 meniny</span>
+      <span class="legend-item"><span class="legend-dot nameday-peter-dot"></span> Peter • meniny</span>
+      <span class="legend-item"><span class="legend-dot nameday-erika-dot"></span> Erika • meniny</span>
       <span class="legend-item">◯ dnešok</span>
     </div>
   </section>
@@ -619,6 +667,33 @@
             <div class="milestone-title">Výročie začiatku</div>
             <div class="milestone-date">24. november</div>
             <div class="milestone-countdown" id="anniversaryCountdown">...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENINY PETRA A ERIKY -->
+  <section class="glass name-day-section mb-4">
+    <h5 class="text-center name-day-title">🎉 Naše meniny</h5>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <div class="nameday-card peter">
+          <div class="nameday-icon">👨‍❤️‍💋‍👨</div>
+          <div class="nameday-info">
+            <div class="nameday-name">Peter</div>
+            <div class="nameday-date">29. jún</div>
+            <div class="nameday-countdown" id="peterNameDayCountdown">...</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="nameday-card erika">
+          <div class="nameday-icon">💗</div>
+          <div class="nameday-info">
+            <div class="nameday-name">Erika</div>
+            <div class="nameday-date">2. február</div>
+            <div class="nameday-countdown" id="erikaNameDayCountdown">...</div>
           </div>
         </div>
       </div>
@@ -1039,11 +1114,20 @@
 
     function daysUntil(month, day) {
       const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
       let target = new Date(now.getFullYear(), month, day);
-      if (target < now) {
-        target = new Date(now.getFullYear() + 1, month, day);
-      }
-      return Math.ceil((target - now) / (1000*60*60*24));
+      if (target < today) target = new Date(now.getFullYear() + 1, month, day);
+      return Math.round((target - today) / (1000*60*60*24));
+    }
+
+    function nameDayStatus(month, day) {
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const current = new Date(now.getFullYear(), month, day);
+      const todayItself = today.getMonth() === month && today.getDate() === day;
+      if (todayItself) return { today: true, days: 0 };
+      const target = current > today ? current : new Date(now.getFullYear() + 1, month, day);
+      return { today: false, days: Math.round((target - today) / (1000*60*60*24)) };
     }
 
     // ---------- AKTUALIZÁCIA ŠTATISTÍK ----------
@@ -1079,6 +1163,8 @@
 
       const birthdayEl = document.getElementById('birthdayCountdown');
       const annivEl = document.getElementById('anniversaryCountdown');
+      const peterEl = document.getElementById('peterNameDayCountdown');
+      const erikaEl = document.getElementById('erikaNameDayCountdown');
 
       if (isBirthday) {
         birthdayEl.innerHTML = '💕 Dnes máme narodeniny! 🥳';
@@ -1093,6 +1179,15 @@
         const days = daysUntil(ANNIVERSARY.month, ANNIVERSARY.day);
         annivEl.innerHTML = `o <span class="highlight">${days}</span> dní`;
       }
+
+      const peter = nameDayStatus(5, 29); // Peter — 29. jún
+      const erika = nameDayStatus(1, 2);  // Erika — 2. február
+      peterEl.innerHTML = peter.today
+        ? '🎉 <span class="highlight">Dnes má Peter meniny!</span> 💗'
+        : `o <span class="highlight">${peter.days}</span> dní`;
+      erikaEl.innerHTML = erika.today
+        ? '🎉 <span class="highlight">Dnes má Erika meniny!</span> 💗'
+        : `o <span class="highlight">${erika.days}</span> dní`;
     }
 
     // ---------- VYKRESLENIE KALENDÁRA (S OZNAČENÍM VŠETKÝCH UDALOSTÍ) ----------
@@ -1147,6 +1242,8 @@
         const isStart = (d.getMonth() === startMonth && d.getDate() === startDay);
         const isBirthday = (d.getMonth() === BIRTHDAY.month && d.getDate() === BIRTHDAY.day);
         const isAnniversary = (d.getMonth() === ANNIVERSARY.month && d.getDate() === ANNIVERSARY.day);
+        const isPeterNameDay = (d.getMonth() === 5 && d.getDate() === 29);
+        const isErikaNameDay = (d.getMonth() === 1 && d.getDate() === 2);
 
         // Meniny sú viazané iba na mesiac a deň, preto fungujú v každom roku.
         const nameDay = NAME_DAYS[`${d.getMonth() + 1}-${d.getDate()}`] || '';
@@ -1158,6 +1255,8 @@
         } else if (isAnniversary) {
           cell.classList.add('anniversary');
         }
+        if (isPeterNameDay) cell.classList.add('nameday-peter');
+        if (isErikaNameDay) cell.classList.add('nameday-erika');
 
         let eventIcon = '';
         if (isStart) eventIcon = '♡';
@@ -1174,7 +1273,9 @@
         if (isStart) specialNames.push('Začiatok vzťahu');
         if (isBirthday) specialNames.push('Naše narodeniny');
         if (isAnniversary) specialNames.push('Výročie začiatku');
-        if (nameDay) specialNames.push('Meniny: ' + nameDay);
+        if (isPeterNameDay) specialNames.push('🎉 Meniny: Peter');
+        if (isErikaNameDay) specialNames.push('🎉 Meniny: Erika');
+        if (nameDay && !isPeterNameDay && !isErikaNameDay) specialNames.push('Meniny: ' + nameDay);
         cell.title = specialNames.join(' • ');
 
         (function(dateObj) {
@@ -1185,10 +1286,14 @@
 
             const isBirthdayClick = (clicked.getMonth() === BIRTHDAY.month && clicked.getDate() === BIRTHDAY.day);
             const isAnniversaryClick = (clicked.getMonth() === ANNIVERSARY.month && clicked.getDate() === ANNIVERSARY.day);
+            const isPeterClick = (clicked.getMonth() === 5 && clicked.getDate() === 29);
+            const isErikaClick = (clicked.getMonth() === 1 && clicked.getDate() === 2);
             const clickedNameDay = NAME_DAYS[`${clicked.getMonth() + 1}-${clicked.getDate()}`] || '';
 
             const messages = [];
-            if (clickedNameDay) messages.push(`🎉 Meniny: ${clickedNameDay}`);
+            if (isPeterClick) messages.push('🎉 Peter má dnes meniny! 💗');
+            if (isErikaClick) messages.push('🎉 Erika má dnes meniny! 💗');
+            if (clickedNameDay && !isPeterClick && !isErikaClick) messages.push(`🎉 Meniny: ${clickedNameDay}`);
             if (isBirthdayClick) messages.push('💕 Naše narodeniny! Dnes máme sviatok! 🥳');
             if (isAnniversaryClick) {
               const years = clicked.getFullYear() - start.getFullYear();
