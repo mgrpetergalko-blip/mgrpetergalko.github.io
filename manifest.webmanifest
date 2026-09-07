@@ -1,0 +1,22 @@
+{
+  "name": "Náš spoločný čas ♡",
+  "short_name": "Náš čas ♡",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fce4ec",
+  "theme_color": "#ff6f9f",
+  "icons": [
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
