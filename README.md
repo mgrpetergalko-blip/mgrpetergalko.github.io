@@ -1,45 +1,148 @@
-# 💕 Náš spoločný čas — PWA
+# 💕 Náš spoločný čas ♡
 
-> Každý deň je ďalší malý kúsok nášho príbehu.
+> Osobný partnerský kalendár vytvorený s láskou ❤️
 
-Interaktívna webová aplikácia, ktorá počítade dni, mesiace a roky od začiatku vzťahu, zobrazuje kalendár so zvýraznenými výročiami a pripomína najdôležitejšie dátumy – narodeniny a výročie. Aplikácia je plne responzívna, podporuje inštaláciu ako PWA na iPhone aj Android a obsahuje jemné animované srdiečka na pozadí.
+**Náš spoločný čas ♡** je moderná, responzívna webová aplikácia vytvorená ako osobný partnerský kalendár. Zobrazuje, ako dlho sme spolu, významné dátumy, meniny, kalendár, aktuálny čas a ďalšie spoločné udalosti.
 
----
-
-## ✨ Funkcie
-
-- **Počítadlo dní / mesiacov / rokov** – automaticky sa aktualizuje každú minútu.
-- **Živé hodiny** – zobrazenie aktuálneho času v pravom hornom rohu.
-- **Kalendár** – možnosť listovať mesiacmi, zvýraznený dnešok a špeciálne dni:
-  - ♡ **Začiatok vzťahu** (24. november 2024)
-  - 💕 **Narodeniny** (16. júl – každý rok)
-  - 💞 **Výročie začiatku** (24. november – každý rok)
-- **Klik na ľubovoľný deň** – zobrazí poradový deň od začiatku vzťahu (alebo informáciu, že ešte neboli spolu).
-- **Významné dni** – samostatná sekcia s odpočtom do najbližších narodenín a výročia.
-- **Animované pozadie** – jemné plávajúce bubliny a lietajúce srdiečka.
-- **Inštalácia ako PWA** – funguje offline, otvára sa na celú obrazovku ako natívna aplikácia.
+Projekt je vytvorený pomocou **HTML5, CSS3, JavaScriptu a Bootstrap 5** a obsahuje podporu pre **Progressive Web App (PWA)**.
 
 ---
 
-## 🛠️ Použité technológie
+## ❤️ O projekte
 
-- **HTML5** – štruktúra stránky
-- **CSS3** – vlastné štýly, glassmorfizmus, responzivita
-- **JavaScript (vanilla)** – všetka logika (žiadny framework)
-- **Bootstrap 5** – iba na mriežkový systém a tlačidlá
-- **Google Fonts** – písmo *Quicksand*
-- **PWA (Progressive Web App)** – manifest.json + Service Worker
+### Spolu od
+
+**24. 11. 2024**
+
+Aplikácia automaticky počíta:
+
+- ❤️ počet dní spolu
+- 💕 počet mesiacov spolu
+- 💞 počet rokov spolu
+- 🕐 aktuálny čas
+- 📅 aktuálny dátum
+- 💗 najbližšie významné udalosti
+- 🌸 slovenské meniny
+- 💞 výročie začiatku vzťahu
+- 🎂 narodeniny
+- 💋 osobné meniny
+
+Všetky výpočty prebiehajú automaticky podľa aktuálneho dátumu.
 
 ---
 
-## 📁 Štruktúra súborov
-index.html, test.html , test.js , test.json
+# ✨ Funkcie
+
+## ⏳ Počítadlo spoločného času
+
+Hlavná časť aplikácie zobrazuje aktuálne trvanie nášho spoločného času od:
+
+**24. novembra 2024**
+
+Počet dní, mesiacov a rokov sa vypočítava automaticky.
+
+Nie je potrebné nič manuálne nastavovať.
+
 ---
 
-🤝 Autor
-Mgr. Peter Galko
-Vytvorené s láskou 💗
----
-📄 Licencia
-Tento projekt je určený na osobné použitie. Ak ho chceš zdieľať alebo upravovať, prosím o uvedenie autora.
+## 🕐 Aktuálny čas
 
+Aplikácia zobrazuje aktuálny čas podľa zariadenia, na ktorom je otvorená.
+
+Čas sa automaticky aktualizuje.
+
+---
+
+## 📅 Partnerský kalendár
+
+Kalendár umožňuje prechádzať jednotlivé mesiace pomocou navigačných tlačidiel.
+
+Používa slovenské názvy:
+
+- január
+- február
+- marec
+- apríl
+- máj
+- jún
+- júl
+- august
+- september
+- október
+- november
+- december
+
+Dni v týždni:
+
+**Po · Ut · St · Št · Pi · So · Ne**
+
+Významné dátumy sú v kalendári vizuálne zvýraznené.
+
+---
+
+# 💞 Významné dátumy
+
+## 💕 Naše narodeniny
+
+**16. júl**
+
+Aplikácia automaticky vypočítava odpočítavanie do najbližšieho dátumu.
+
+---
+
+## 💞 Výročie začiatku
+
+**24. november**
+
+Výročie sa počíta od:
+
+**24. 11. 2024**
+
+---
+
+# 💗 Meniny
+
+Aplikácia obsahuje slovenský kalendár menín.
+
+Osobitne sú zvýraznené:
+
+- 💋 **Peter – 29. jún**
+- 💗 **Erika – 2. február**
+
+Meniny sa automaticky zobrazujú aj priamo v kalendári.
+
+---
+
+# 🌸 Dizajn
+
+Aplikácia používa moderný romantický dizajn založený na pastelových farbách a glassmorphism efektoch.
+
+Použité prvky:
+
+- 💕 pastelová ružová
+- 💜 jemná fialová
+- 🤍 sklenené karty
+- ✨ jemné tiene
+- 💗 animované srdiečka
+- 🌸 dekoratívne prvky
+- 📱 responzívny dizajn
+- 🎨 SVG grafika
+- 🔤 font Quicksand
+
+Rozhranie je optimalizované pre:
+
+- 📱 smartfóny
+- 📲 tablety
+- 💻 notebooky
+- 🖥️ stolné počítače
+
+---
+
+# 📱 Progressive Web App
+
+Projekt obsahuje podporu pre **PWA – Progressive Web App**.
+
+Súčasťou projektu je:
+
+```text
+manifest.webmanifest
